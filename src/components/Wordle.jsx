@@ -13,7 +13,10 @@ const WordleGame = () => {
   const [isGameOver, setIsGameOver] = useState(false);
   const [targetWord, setTargetWord] = useState("");
 
-  // Select a random word from the list on page load
+  const gifUrl = "https://steamuserimages-a.akamaihd.net/ugc/1732171141379876034/21EFDBAF90CCAC511280BF858A31B126E7868C1E/"
+
+  
+  // Select a random word from the list on paged load
   useEffect(() => {
     const randomWord = wordList[Math.floor(Math.random() * wordList.length)];
     setTargetWord(randomWord);
@@ -48,7 +51,8 @@ const WordleGame = () => {
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100">
-      <div className="w-full max-w-lg p-8 bg-white rounded-lg shadow-lg">
+      <div className="w-full max-w-lg p-8 bg-white rounded-lg shadow-lg"
+        style={{ backgroundImage: `url(${gifUrl})` }}>
         <h1 className="mb-4 text-2xl font-semibold text-center">Wordle Game</h1>
 
         {/* Display the grid with all 6 rows of 5 boxes */}
