@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import VocabularyMemoryGame from './components/VocabularyMemoryGame';
 import VocabularyQuiz from './components/VocabularyQuiz';
 import NextPassage from './components/NextPassage';
+import SpeechRecognition from './components/SpeechRecognition';
 import Footer from './components/Footer';
 
 const AppContent = () => {
@@ -22,6 +23,7 @@ const AppContent = () => {
         <Route path="/memory-game" element={<VocabularyMemoryGame />} />
         <Route path="/vocab-quiz" element={<VocabularyQuiz />} />
         <Route path="/next-passage" element={<NextPassage />} />
+        <Route path='/speech-recognition' element={<SpeechRecognition />} />
       </Routes>
       <Footer />
     </div>

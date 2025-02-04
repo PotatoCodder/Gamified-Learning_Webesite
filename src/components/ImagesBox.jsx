@@ -3,13 +3,16 @@ import { Link } from "react-router-dom";
 import { FaArrowRight } from "react-icons/fa";
 import wordle from "../assets/wordle.jpg";
 import speech from "../assets/speech.webp";
-
+import memoryGame from "../assets/memory-game.png";
+import vocabQuiz from "../assets/vocab-quiz.jpg";
+import nextPassage from "../assets/next-passage.avif";
+import NextPassage from "./NextPassage";
 const features = [
   { img: wordle, text: "Wordle", link: "/wordle" },
-  { img: speech, text: "Speech Feature", link: "/speech" },
-  { img: "path_to_image_3.jpg", text: "Vocabulary Quiz", link: "/vocab-quiz" },
-  { img: "path_to_image_4.jpg", text: "Memory Game", link: "/memory-game" },
-  { img: "path_to_image_5.jpg", text: "Next Passage", link: "/next-passage" },
+  { img: speech, text: "Speech Feature", link: "/speech-recognition" },
+  { img: vocabQuiz, text: "Vocabulary Quiz", link: "/vocab-quiz" },
+  { img: memoryGame, text: "Memory Game", link: "/memory-game" },
+  { img: nextPassage, text: "Next Passage", link: "/next-passage" },
   { img: "path_to_image_6.jpg", text: "Feature 6", link: "/feature6" },
 ];
 
