@@ -6,14 +6,15 @@ import speech from "../assets/speech.webp";
 import memoryGame from "../assets/memory-game.png";
 import vocabQuiz from "../assets/vocab-quiz.jpg";
 import nextPassage from "../assets/next-passage.avif";
-import NextPassage from "./NextPassage";
+import fourpicsoneword from "../assets/fourpicsoneword.png";
+
 const features = [
   { img: wordle, text: "Wordle", link: "/wordle" },
   { img: speech, text: "Speech Feature", link: "/speech-recognition" },
   { img: vocabQuiz, text: "Vocabulary Quiz", link: "/vocab-quiz" },
   { img: memoryGame, text: "Memory Game", link: "/memory-game" },
   { img: nextPassage, text: "Next Passage", link: "/next-passage" },
-  { img: "path_to_image_6.jpg", text: "4 Pics 1 Word", link: "/four-pics-one-word" },
+  { img: fourpicsoneword, text: "4 Pics 1 Word", link: "/four-pics-one-word" },
 ];
 
 const ImageBoxes = () => {
@@ -24,7 +25,6 @@ const ImageBoxes = () => {
           Explore MyWordle Features
         </h2>
 
-        {/* 3x2 Grid Layout with responsive design */}
         <div className="grid grid-cols-3 gap-6">
           {features.map((feature, index) => (
             <Link key={index} to={feature.link} className="group relative block">
