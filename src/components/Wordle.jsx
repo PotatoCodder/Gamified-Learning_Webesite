@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 
 // List of 20 possible words
@@ -46,9 +47,9 @@ const WordleGame = () => {
   };
 
   return (
-    <div className="h-screen flex justify-center items-center bg-gray-100">
-      <div className="p-8 bg-white rounded-lg shadow-lg max-w-lg w-full">
-        <h1 className="text-2xl font-semibold mb-4 text-center">Wordle Game</h1>
+    <div className="flex items-center justify-center h-screen bg-gray-100">
+      <div className="w-full max-w-lg p-8 bg-white rounded-lg shadow-lg">
+        <h1 className="mb-4 text-2xl font-semibold text-center">Wordle Game</h1>
 
         {/* Display the grid with all 6 rows of 5 boxes */}
         <div className="mb-4">
@@ -80,7 +81,7 @@ const WordleGame = () => {
             />
             <button
               type="submit"
-              className="mt-2 w-full bg-blue-500 text-white p-2 rounded-md"
+              className="w-full p-2 mt-2 text-white bg-blue-500 rounded-md"
               disabled={isGameOver}
             >
               Submit Guess
@@ -90,7 +91,7 @@ const WordleGame = () => {
 
         {/* Display the game outcome */}
         {isGameOver && (
-          <div className="mt-4 text-center text-xl font-bold">
+          <div className="mt-4 text-xl font-bold text-center">
             {guess === targetWord ? "You Win!" : `Game Over! The word was "${targetWord.toUpperCase()}"`}
           </div>
         )}

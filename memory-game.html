@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vocabulary Memory Game</title>
+  <style>
+    /* Body Styling */
+    body {
+        font-family: 'Arial', sans-serif;
+        text-align: center;
+        background: linear-gradient(135deg, #f0f4f7, #e1ecf4); /* Soft gradient background */
+        margin: 0;
+        padding: 0;
+    }
+    
+    /* Heading Style */
+    h1 {
+        margin: 30px;
+        font-size: 36px;
+        color: #333;
+        font-family: 'Roboto', sans-serif;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Game Board Styling */
+    .game-board {
+        display: grid;
+        grid-template-columns: repeat(4, 150px);
+        grid-gap: 20px;
+        justify-content: center;
+        margin-top: 50px;
+        padding-bottom: 50px;
+    }
+    
+    /* Card Styling */
+    .card {
+        width: 150px;
+        height: 150px;
+        background: linear-gradient(135deg, #f4f4f4, #ffffff); /* Subtle gradient background */
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 22px;
+        cursor: pointer;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for card */
+        transition: transform 0.5s ease, box-shadow 0.3s ease;
+        transform-style: preserve-3d;
+    }
+    
+    .card:hover {
+        background: linear-gradient(135deg, #b3e0ff, #d6e7f3); /* Hover effect */
+        transform: scale(1.1); /* Slight scale-up effect when hovered */
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Larger shadow when hovered */
+    }
+    
+    .card.flipped {
+        transform: rotateY(180deg); /* Flip the card */
+    }
+    
+    /* Front Side of the Card */
+    .card .front {
+        position: absolute;
+        backface-visibility: hidden;
+        background-color: #4CAF50; /* Green Front */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 24px;
+        font-weight: bold;
+        border-radius: 10px;
+        box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1); /* Inset shadow to give depth */
+        text-transform: uppercase; /* Make word uppercase */
+    }
+    
+    /* Back Side of the Card */
+    .card .back {
+        position: absolute;
+        backface-visibility: hidden;
+        transform: rotateY(180deg); /* Rotate back side of the card */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #FFD700; /* Bright Yellow Back */
+        font-size: 18px;
+        color: #333;
+        border-radius: 10px;
+        box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1); /* Inset shadow */
+        font-weight: bold;
+        text-transform: capitalize; /* Make meaning text capitalize */
+    }
+    
+    /* Popup Styling */
+    .popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        animation: fadeIn 0.5s ease-in-out;
+    }
+    
+    /* Popup Content */
+    .popup-content {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        width: 300px;
+        text-align: center;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        transform: scale(0.9);
+        animation: popUp 0.3s forwards; /* Popup animation */
+    }
+    
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+    
+    @keyframes popUp {
+        from {
+            transform: scale(0.9);
+        }
+        to {
+            transform: scale(1);
+        }
+    }
+    
+    /* Popup Button Styling */
+    button {
+        margin-top: 20px;
+        padding: 12px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+    }
+    
+    button:hover {
+        background-color: #45a049;
+    }
+    
+    button:focus {
+        outline: none;
+    }
+    
+    /* Centering the game board and some space between items */
+    .game-board {
+        margin-top: 80px;
+        padding-bottom: 50px;
+    }
+    
+    /* Adjusting font size of the game title */
+    h1 {
+        font-size: 40px;
+        color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>Vocabulary Memory Game</h1>
+  <div class="game-board" id="game-board"></div>
+
+  <!-- Popup for displaying word meanings -->
+  <div class="popup" id="popup">
+    <div class="popup-content">
+      <p id="word-meaning"></p>
+      <button id="close-popup">Close</button>
+    </div>
+  </div>
+
+  <script>
+    // List of words and their meanings
+    const words = [
+        { word: 'speculated', meaning: 'means to form a theory or guess about something without having all the facts or sufficient evidence to confirm it' },
+        { word: 'habits', meaning: 'the manner by which one repeatedly does a task.' },
+        { word: 'resolved', meaning: ' refers to how our brain might deal with or solve problems .' },
+        { word: 'dangerous', meaning: ' means something that is likely to cause harm, injury, or a risk to safety or well-being. It refers to situations, objects, or actions that have the potential to be harmful or risky.' },
+        { word: 'speculated', meaning: 'means to form a theory or guess about something without having all the facts or sufficient evidence to confirm it' },
+        { word: 'habits', meaning: 'the manner by which one repeatedly does a task.' },
+        { word: 'resolved', meaning: ' refers to how our brain might deal with or solve problems .' },
+        { word: 'dangerous', meaning: ' means something that is likely to cause harm, injury, or a risk to safety or well-being. It refers to situations, objects, or actions that have the potential to be harmful or risky.' }
+      ];
+    
+    const gameBoard = document.getElementById('game-board');
+    const popup = document.getElementById('popup');
+    const closePopupButton = document.getElementById('close-popup');
+    const wordMeaning = document.getElementById('word-meaning');
+    let flippedCards = [];
+    let matchedCards = [];
+    
+    // Shuffle the cards randomly
+    function shuffleArray(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]]; // Swap elements
+      }
+    }
+    
+    // Create cards and place them on the board
+    function createCard(word, index) {
+      const card = document.createElement('div');
+      card.classList.add('card');
+      card.dataset.index = index;
+      card.dataset.word = word.word;
+    
+      // Front of the card (blank)
+      const front = document.createElement('div');
+      front.classList.add('front');
+      card.appendChild(front);
+    
+      // Back of the card (shows word)
+      const back = document.createElement('div');
+      back.classList.add('back');
+      back.innerHTML = word.word; // Display the word itself
+      card.appendChild(back);
+    
+      card.addEventListener('click', flipCard);
+      gameBoard.appendChild(card);
+    }
+    
+    // Flip the card when clicked
+    function flipCard() {
+      if (flippedCards.length === 2) return; // Only allow flipping two cards at a time
+    
+      const card = this;
+    
+      if (flippedCards.includes(card) || matchedCards.includes(card)) return; // Ignore cards that are already matched or flipped
+    
+      card.classList.add('flipped'); // Add flipped class to show the word
+      flippedCards.push(card);
+    
+      if (flippedCards.length === 2) {
+        checkMatch();
+      }
+    }
+    
+    // Check if the flipped cards match
+    function checkMatch() {
+      const [card1, card2] = flippedCards;
+      const word1 = card1.dataset.word;
+      const word2 = card2.dataset.word;
+    
+      if (word1 === word2) {
+        matchedCards.push(card1, card2);
+        showMeaning(word1); // Show the meaning in the popup
+        flippedCards = [];
+      } else {
+        setTimeout(() => {
+          card1.classList.remove('flipped');
+          card2.classList.remove('flipped');
+          flippedCards = [];
+        }, 1000); // Delay to flip the cards back
+      }
+    }
+    
+    // Show the meaning of the word when two cards match
+    function showMeaning(word) {
+      const wordObj = words.find(item => item.word === word);
+      wordMeaning.textContent = wordObj.meaning;
+      popup.style.display = 'flex'; // Display the popup
+    }
+    
+    // Close the popup
+    closePopupButton.addEventListener('click', () => {
+      popup.style.display = 'none'; // Hide the popup when the "Close" button is clicked
+    });
+    
+    // Start the game
+    function startGame() {
+      shuffleArray(words); // Shuffle the words to randomize the order of cards
+      words.forEach((word, index) => createCard(word, index)); // Create and display cards
+    }
+    
+    startGame();
+  </script>
+</body>
+</html>
