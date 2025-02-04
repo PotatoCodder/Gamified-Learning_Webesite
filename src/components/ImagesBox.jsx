@@ -13,7 +13,7 @@ const features = [
   { img: vocabQuiz, text: "Vocabulary Quiz", link: "/vocab-quiz" },
   { img: memoryGame, text: "Memory Game", link: "/memory-game" },
   { img: nextPassage, text: "Next Passage", link: "/next-passage" },
-  { img: "path_to_image_6.jpg", text: "Feature 6", link: "/feature6" },
+  { img: "path_to_image_6.jpg", text: "4 Pics 1 Word", link: "/four-pics-one-word" },
 ];
 
 const ImageBoxes = () => {
