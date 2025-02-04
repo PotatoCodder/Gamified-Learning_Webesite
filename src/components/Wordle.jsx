@@ -13,7 +13,7 @@ const WordleGame = () => {
   const [isGameOver, setIsGameOver] = useState(false);
   const [targetWord, setTargetWord] = useState("");
 
-  const gifUrl = "https://steamuserimages-a.akamaihd.net/ugc/1732171141379876034/21EFDBAF90CCAC511280BF858A31B126E7868C1E/"
+  const gifUrl = "https://steamuserimages-a.akamaihd.net/ugc/1732171141379868306/BB6C147DA9BA7B58F1489C00F13549FCCA8F268A/"
 
   
   // Select a random word from the list on paged load
@@ -44,7 +44,7 @@ const WordleGame = () => {
   };
 
   const getColor = (letter, index) => {
-    if (targetWord[index] === letter) return "bg-green-500"; // Correct letter in correct place
+    if (targetWord[index] === letter) return "bg-greaen-500"; // Correct letter in correct place
     if (targetWord.includes(letter)) return "bg-yellow-500"; // Correct letter, wrong place
     return "bg-gray-400"; // Incorrect letter
   };
