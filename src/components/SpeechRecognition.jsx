@@ -13,7 +13,6 @@ const SpeechRecognitionTest = () => {
   const [currentPassage, setCurrentPassage] = useState(_.sample(passages));
   const [isListening, setIsListening] = useState(false);
   const [feedback, setFeedback] = useState("");
-  const [transcript, setTranscript] = useState("");
   const [spokenWords, setSpokenWords] = useState([]);
   const [recognition, setRecognition] = useState(null);
 
@@ -22,13 +21,15 @@ const SpeechRecognitionTest = () => {
       const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
       const recognitionInstance = new SpeechRecognitionAPI();
       recognitionInstance.lang = "en-US";
-      recognitionInstance.continuous = false;
-      recognitionInstance.interimResults = false;
+      recognitionInstance.continuous = true;
+      recognitionInstance.interimResults = true;
       
       recognitionInstance.onresult = (event) => {
-        const result = event.results[0][0].transcript;
-        setTranscript(result);
-        setSpokenWords(result.toLowerCase().split(" "));
+        let spokenText = "";
+        for (let i = 0; i < event.results.length; i++) {
+          spokenText += event.results[i][0].transcript + " ";
+        }
+        setSpokenWords(spokenText.trim().toLowerCase().split(" "));
       };
       
       recognitionInstance.onerror = () => {
@@ -42,37 +43,20 @@ const SpeechRecognitionTest = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (spokenWords.length >= currentPassage.split(" ").length) {
-      stopListening();
-    }
-  }, [spokenWords]);
-
   const startListening = () => {
-    setFeedback("Listening...");
-    setIsListening(true);
-    setSpokenWords([]);
-    recognition.start();
+    if (recognition) {
+      setFeedback("Listening...");
+      setIsListening(true);
+      setSpokenWords([]);
+      recognition.start();
+    }
   };
 
   const stopListening = () => {
-    recognition.stop();
-    setIsListening(false);
-    compareText(transcript);
-  };
-
-  const compareText = (userText) => {
-    const userWords = userText.toLowerCase().split(" ");
-    const originalWords = currentPassage.toLowerCase().split(" ");
-    let errors = [];
-    
-    for (let i = 0; i < originalWords.length; i++) {
-      if (userWords[i] !== originalWords[i]) {
-        errors.push(`Error at word ${i + 1}: Expected "${originalWords[i]}", but got "${userWords[i] || "[missing]"}"`);
-      }
+    if (recognition) {
+      recognition.stop();
+      setIsListening(false);
     }
-    
-    setFeedback(errors.length === 0 ? "Perfect!" : errors.join("\n"));
   };
 
   const getHighlightedText = () => {
