@@ -25,6 +25,7 @@ const VocabularyMemoryGame = () => {
   const [popupContent, setPopupContent] = useState(null);
   const [timer, setTimer] = useState(60); // 60-second timer
   const [isGameOver, setIsGameOver] = useState(false);
+  const [score, setScore] = useState(0);
 
   // Shuffle cards on game start
   useEffect(() => {
@@ -53,6 +54,8 @@ const VocabularyMemoryGame = () => {
       const [firstIndex] = flippedCards;
       if (cards[firstIndex].word === cards[index].word && firstIndex !== index) {
         setMatchedCards([...matchedCards, firstIndex, index]);
+        setScore((prevScore) => prevScore + 1); // Increase score on correct match
+        localStorage.setItem('score', score + 1); // Store score in localStorage
         setPopupContent(cards[index].meaning);
       }
       setTimeout(() => setFlippedCards([]), 1000);
@@ -66,6 +69,7 @@ const VocabularyMemoryGame = () => {
     setTimer(60);
     setIsGameOver(false);
     setPopupContent(null);
+    setScore(0); // Reset score
   };
 
   const tryAgain = () => {
@@ -75,23 +79,24 @@ const VocabularyMemoryGame = () => {
     setTimer(60);
     setIsGameOver(false);
     setPopupContent(null);
+    setScore(0); // Reset score
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-8 bg-gradient-to-r from-indigo-300 via-purple-300 to-pink-300">
-      <h1 className="text-4xl sm:text-5xl font-bold text-gray-800 mb-8">Vocabulary Memory Game</h1>
+    <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gradient-to-r from-indigo-300 via-purple-300 to-pink-300">
+      <h1 className="mb-8 text-4xl font-bold text-center text-gray-800 sm:text-5xl">Vocabulary Memory Game</h1>
 
       {/* Timer and Restart Button */}
-      <div className="mb-6 text-xl font-semibold">
+      <div className="mb-6 text-xl font-semibold text-center">
         <span className="text-gray-800">Time Left: {timer}s</span>
-        {isGameOver && <p className="text-red-600 mt-2">Game Over!</p>}
+        {isGameOver && <p className="mt-2 text-red-600">Game Over!</p>}
       </div>
 
       {/* Display Try Again Button when the game is over */}
       {isGameOver && (
         <button
           onClick={tryAgain}
-          className="px-6 py-2 text-white bg-orange-500 rounded-lg hover:bg-orange-600 mt-4 mb-8"
+          className="px-6 py-2 mt-4 mb-8 text-white bg-orange-500 rounded-lg hover:bg-orange-600"
         >
           Try Again
         </button>
@@ -100,38 +105,31 @@ const VocabularyMemoryGame = () => {
       {/* Restart button */}
       <button
         onClick={restartGame}
-        className="px-6 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 mt-4 mb-8"
+        className="px-6 py-2 mt-4 mb-8 text-white bg-blue-500 rounded-lg hover:bg-blue-600"
       >
         Restart Game
       </button>
 
+      {/* Display Score */}
+      <div className="mb-4 text-lg font-semibold text-center">
+        <span className="text-gray-800">Score: {score}</span>
+      </div>
+
       {/* Grid layout for the game cards */}
-      <div className="grid grid-cols-3 sm:grid-cols-6 gap-4">
+      <div className="grid grid-cols-3 gap-4 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6">
         {cards.map((card, index) => (
           <div
             key={index}
-            className={`relative w-24 sm:w-32 h-24 sm:h-32 rounded-lg shadow-lg overflow-hidden cursor-pointer transition-transform duration-300 transform hover:scale-105 ${
-              flippedCards.includes(index) || matchedCards.includes(index)
-                ? "bg-green-500 text-white"
-                : "bg-white"
-            }`}
+            className={`relative w-24 h-24 rounded-lg shadow-lg overflow-hidden cursor-pointer transition-transform duration-300 transform hover:scale-105 ${flippedCards.includes(index) || matchedCards.includes(index) ? "bg-green-500 text-white" : "bg-white"}`}
             onClick={() => flipCard(index)}
           >
             <div
-              className={`absolute w-full h-full flex items-center justify-center text-lg font-bold transition-all duration-500 ${
-                flippedCards.includes(index) || matchedCards.includes(index)
-                  ? "opacity-100"
-                  : "opacity-0"
-              }`}
+              className={`absolute w-full h-full flex items-center justify-center text-lg font-bold transition-all duration-500 ${flippedCards.includes(index) || matchedCards.includes(index) ? "opacity-100" : "opacity-0"}`}
             >
               {card.word}
             </div>
             <div
-              className={`absolute w-full h-full flex items-center justify-center text-3xl font-bold transition-all duration-500 ${
-                flippedCards.includes(index) || matchedCards.includes(index)
-                  ? "opacity-0"
-                  : "opacity-100"
-              }`}
+              className={`absolute w-full h-full flex items-center justify-center text-3xl font-bold transition-all duration-500 ${flippedCards.includes(index) || matchedCards.includes(index) ? "opacity-0" : "opacity-100"}`}
             >
               ?
             </div>
@@ -142,7 +140,7 @@ const VocabularyMemoryGame = () => {
       {/* Popup content for the meaning of the word */}
       {popupContent && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="p-6 text-center bg-white rounded-lg shadow-lg max-w-sm mx-auto">
+          <div className="max-w-sm p-6 mx-auto text-center bg-white rounded-lg shadow-lg">
             <p className="mb-4 text-lg font-semibold">{popupContent}</p>
             <button
               className="px-6 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600"
@@ -153,6 +151,22 @@ const VocabularyMemoryGame = () => {
           </div>
         </div>
       )}
+
+      {/* Skip and Next Links (Fixed Position) */}
+      <div className="flex justify-between w-full px-4 mt-4 sm:px-8">
+        <button
+          onClick={restartGame}
+          className="w-full px-6 py-2 text-white bg-gray-500 rounded-lg hover:bg-gray-600 sm:w-auto"
+        >
+          Skip
+        </button>
+        <button
+          onClick={restartGame}
+          className="w-full px-6 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 sm:w-auto"
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 };

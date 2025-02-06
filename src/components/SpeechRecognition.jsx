@@ -87,41 +87,41 @@ const SpeechRecognitionTest = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-900 via-purple-800 to-indigo-900 text-white p-5">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-full sm:max-w-lg">
-        <h1 className="text-3xl font-bold text-center text-gray-900 mb-6">Speech Recognition Test</h1>
+    <div className="flex items-center justify-center min-h-screen p-5 text-white bg-gradient-to-br from-blue-900 via-purple-800 to-indigo-900">
+      <div className="w-full p-6 bg-white rounded-lg shadow-lg sm:max-w-lg">
+        <h1 className="mb-6 text-3xl font-bold text-center text-gray-900">Speech Recognition Test</h1>
 
         <div className="mb-6">
           <p className="text-xl font-semibold">Read this passage aloud:</p>
-          <div className="text-lg mt-4 text-gray-800">
+          <div className="mt-4 text-lg text-gray-800">
             {getHighlightedText()}
           </div>
         </div>
 
-        <div className="mb-6 flex justify-center gap-4">
+        <div className="flex justify-center gap-4 mb-6">
           <button
             onClick={startListening}
-            className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-700 disabled:opacity-50"
+            className="px-6 py-3 text-white bg-blue-500 rounded-lg hover:bg-blue-700 disabled:opacity-50"
             disabled={isListening}
           >
             <FaMicrophone className="inline-block mr-2" /> Start Reading
           </button>
           <button
             onClick={stopListening}
-            className="bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-700 disabled:opacity-50"
+            className="px-6 py-3 text-white bg-red-500 rounded-lg hover:bg-red-700 disabled:opacity-50"
             disabled={!isListening}
           >
             <FaStop className="inline-block mr-2" /> Stop Reading
           </button>
         </div>
 
-        <div className="text-lg text-center mt-4">
+        <div className="mt-4 text-lg text-center">
           <p>{feedback}</p>
         </div>
 
         <button
           onClick={() => setCurrentPassage(_.sample(passages))}
-          className="mt-4 w-full bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-700"
+          className="w-full px-4 py-2 mt-4 text-white bg-green-500 rounded-lg hover:bg-green-700"
         >
           Try Another Passage
         </button>

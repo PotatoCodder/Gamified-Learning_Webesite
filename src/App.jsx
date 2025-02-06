@@ -10,9 +10,14 @@ import NextPassage from './components/NextPassage';
 import SpeechRecognition from './components/SpeechRecognition';
 import FourpicsOneword from './components/FourpicsOneword';
 import Footer from './components/Footer';
+import GuessThePicture from './components/GuessThePicture';
 
 const AppContent = () => {
   const location = useLocation();
+
+  localStorage.setItem('fourPicOneWordScore', 0);
+  localStorage.setItem('wordleScore', 0);
+  localStorage.setItem('guessGameScore', 0);
 
   return (
     <div>
@@ -25,6 +30,7 @@ const AppContent = () => {
         <Route path="/vocab-quiz" element={<VocabularyQuiz />} />
         <Route path="/next-passage" element={<NextPassage />} />
         <Route path='/speech-recognition' element={<SpeechRecognition />} />
+        <Route path='guess-picture' element={<GuessThePicture />} />
         <Route path='/four-pics-one-word' element={<FourpicsOneword />} />
       </Routes>
       <Footer />

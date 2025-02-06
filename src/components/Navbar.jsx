@@ -18,7 +18,7 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex space-x-4">
+        <div className="hidden space-x-4 md:flex">
           <a href="#home" className="hover:text-gray-300">Home</a>
           <a href="#about" className="hover:text-gray-300">About</a>
           <a href="#contact" className="hover:text-gray-300">Contact</a>
@@ -26,7 +26,7 @@ const Navbar = () => {
 
         {/* Hamburger Button for Mobile */}
         <button
-          className="md:hidden text-white"
+          className="text-white md:hidden"
           onClick={toggleMenu}
         >
           <svg
@@ -48,7 +48,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       <div className={`md:hidden ${isMenuOpen ? 'block' : 'hidden'}`}>
-        <div className="flex flex-col space-y-4 p-4">
+        <div className="flex flex-col p-4 space-y-4">
           <a href="#home" className="hover:text-gray-300">Home</a>
           <a href="#about" className="hover:text-gray-300">About</a>
           <a href="#contact" className="hover:text-gray-300">Contact</a>

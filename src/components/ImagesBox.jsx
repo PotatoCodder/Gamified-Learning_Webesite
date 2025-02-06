@@ -1,48 +1,43 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { FaArrowRight } from "react-icons/fa";
-import wordle from "../assets/wordle.jpg";
-import speech from "../assets/speech.webp";
-import memoryGame from "../assets/memory-game.png";
-import vocabQuiz from "../assets/vocab-quiz.jpg";
-import nextPassage from "../assets/next-passage.avif";
-import fourpicsoneword from "../assets/fourpicsoneword.png";
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { FaPlay } from 'react-icons/fa'
 
-const features = [
-  { img: wordle, text: "Wordle", link: "/wordle" },
-  { img: speech, text: "Speech Feature", link: "/speech-recognition" },
-  { img: vocabQuiz, text: "Vocabulary Quiz", link: "/vocab-quiz" },
-  { img: memoryGame, text: "Memory Game", link: "/memory-game" },
-  { img: nextPassage, text: "Next Passage", link: "/next-passage" },
-  { img: fourpicsoneword, text: "4 Pics 1 Word", link: "/four-pics-one-word" },
-];
-
-const ImageBoxes = () => {
+export default function ImagesBox() {
   return (
-    <section className="h-auto flex items-center justify-center bg-gradient-to-br from-blue-900 via-purple-800 to-indigo-900 text-white py-8">
-      <div className="max-w-6xl w-full px-6 text-center">
-        <h2 className="text-4xl font-bold mb-10 tracking-wide text-gray-100">
-          Explore MyWordle Features
-        </h2>
-
-        <div className="grid grid-cols-3 gap-6">
-          {features.map((feature, index) => (
-            <Link key={index} to={feature.link} className="group relative block">
-              <img
-                src={feature.img}
-                alt={feature.text}
-                className="object-cover w-full h-48 sm:h-52 md:h-60 lg:h-72 rounded-2xl shadow-lg transform transition duration-300 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-50 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <span className="text-xl font-semibold">{feature.text}</span>
-                <FaArrowRight className="mt-2 text-2xl" />
-              </div>
-            </Link>
-          ))}
+    <div className="flex items-center justify-center min-h-screen p-4 bg-gradient-to-br from-blue-100 to-purple-100">
+      <div className="w-full max-w-3xl p-8 bg-white shadow-2xl rounded-xl">
+        <h1 className="mb-8 text-4xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+          Vocabulary Games
+        </h1>
+        <div className="flex justify-center">
+          <GameCard 
+            title="Word Play"
+            description="Enhance your vocabulary with fun word association games!"
+            icon={<FaPlay className="text-4xl text-purple-500" />}
+            link="/guess-picture"
+          />
         </div>
       </div>
-    </section>
-  );
-};
+    </div>
+  )
+}
 
-export default ImageBoxes;
+function GameCard({ title, description, icon, link }) {
+  return (
+    <div className="w-full max-w-sm p-6 transition-all duration-300 rounded-lg shadow-md bg-gray-50 hover:shadow-xl hover:-translate-y-1">
+      <div className="flex items-center justify-center mb-4">
+        {icon}
+        <h2 className="ml-4 text-2xl font-bold text-gray-800">{title}</h2>
+      </div>
+      <p className="mb-6 text-center text-gray-600">{description}</p>
+      <div className="text-center">
+        <Link 
+          to={link} 
+          className="inline-block px-6 py-2 font-bold text-white transition-all duration-300 transform rounded-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 hover:scale-105"
+        >
+          Play Now
+        </Link>
+      </div>
+    </div>
+  )
+}

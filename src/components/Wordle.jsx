@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 
-// List of 20 possible words
 const wordList = [
   "apple", "grape", "peach", "lemon", "cherry", "mango", "melon", "berry", "plumb", "grape",
   "candy", "house", "table", "chair", "liver", "water", "earth", "stone", "paper", "brave"
@@ -9,22 +8,36 @@ const wordList = [
 
 const WordleGame = () => {
   const [guess, setGuess] = useState("");
-  const [attempts, setAttempts] = useState(Array(6).fill("")); // Initialize with empty strings for 6 rows
+  const [attempts, setAttempts] = useState(Array(6).fill(""));
   const [isGameOver, setIsGameOver] = useState(false);
   const [targetWord, setTargetWord] = useState("");
+  const [score, setScore] = useState(0);
 
-  const gifUrl = "https://steamuserimages-a.akamaihd.net/ugc/1732171141379868306/BB6C147DA9BA7B58F1489C00F13549FCCA8F268A/"
+  const gifUrl = "https://steamuserimages-a.akamaihd.net/ugc/1732171141379868306/BB6C147DA9BA7B58F1489C00F13549FCCA8F268A/";
 
-  
-  // Select a random word from the list on paged load
   useEffect(() => {
     const randomWord = wordList[Math.floor(Math.random() * wordList.length)];
     setTargetWord(randomWord);
   }, []);
 
+  useEffect(() => {
+    const savedScore = localStorage.getItem("wordleScore");
+    if (savedScore) {
+      setScore(parseInt(savedScore, 10));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isGameOver && attempts.includes(targetWord)) {
+      const newScore = score + 10;
+      setScore(newScore);
+      localStorage.setItem("wordleScore", newScore);
+    }
+  }, [isGameOver]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (guess.length !== 5) return; // Make sure guess is 5 letters
+    if (guess.length !== 5) return;
 
     const newAttempts = [...attempts];
     const nextEmptyIndex = attempts.findIndex((attempt) => attempt === "");
@@ -32,39 +45,30 @@ const WordleGame = () => {
       newAttempts[nextEmptyIndex] = guess;
       setAttempts(newAttempts);
     }
-
     setGuess("");
 
-    // Check if guess is correct or if max attempts reached
-    if (guess === targetWord) {
-      setIsGameOver(true);
-    } else if (newAttempts.filter(attempt => attempt !== "").length === 6) {
+    if (guess === targetWord || newAttempts.filter(a => a !== "").length === 6) {
       setIsGameOver(true);
     }
   };
 
   const getColor = (letter, index) => {
-    if (targetWord[index] === letter) return "bg-greaen-500"; // Correct letter in correct place
-    if (targetWord.includes(letter)) return "bg-yellow-500"; // Correct letter, wrong place
-    return "bg-gray-400"; // Incorrect letter
+    if (targetWord[index] === letter) return "bg-green-500";
+    if (targetWord.includes(letter)) return "bg-yellow-500";
+    return "bg-gray-400";
   };
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100">
-      <div className="w-full max-w-lg p-8 bg-white rounded-lg shadow-lg"
-        style={{ backgroundImage: `url(${gifUrl})` }}>
-        <h1 className="mb-4 text-2xl font-semibold text-center">Wordle Game</h1>
+      <div className="relative w-full max-w-lg p-8 text-center bg-white rounded-lg shadow-lg"
+        style={{ backgroundImage: `url(${gifUrl})`, backgroundSize: "cover" }}>
+        <h1 className="mb-4 text-2xl font-semibold">Wordle Game</h1>
 
-        {/* Display the grid with all 6 rows of 5 boxes */}
         <div className="mb-4">
           {attempts.map((attempt, idx) => (
-            <div key={idx} className="flex mb-2">
+            <div key={idx} className="flex justify-center mb-2">
               {Array.from("     ").map((_, index) => (
-                <div
-                  key={index}
-                  className={`w-14 h-14 flex items-center justify-center rounded-md 
-                    ${attempt[index] ? getColor(attempt[index], index) : 'border border-gray-400'}`}
-                >
+                <div key={index} className={`w-14 h-14 flex items-center justify-center rounded-md border border-gray-400 text-lg font-bold ${attempt[index] ? getColor(attempt[index], index) : ''}`}>
                   {attempt[index] && attempt[index].toUpperCase()}
                 </div>
               ))}
@@ -72,35 +76,39 @@ const WordleGame = () => {
           ))}
         </div>
 
-        {/* Input box and submit button */}
         {!isGameOver && (
           <form onSubmit={handleSubmit}>
             <input
               type="text"
               value={guess}
               onChange={(e) => setGuess(e.target.value.toLowerCase())}
-              className="w-full p-2 border rounded-md"
+              className="w-full p-2 text-center border rounded-md"
               maxLength="5"
-              disabled={isGameOver}
             />
-            <button
-              type="submit"
-              className="w-full p-2 mt-2 text-white bg-blue-500 rounded-md"
-              disabled={isGameOver}
-            >
-              Submit Guess
-            </button>
+            <button type="submit" className="w-full p-2 mt-2 text-white bg-blue-500 rounded-md">Submit Guess</button>
           </form>
         )}
 
-        {/* Display the game outcome */}
         {isGameOver && (
-          <div className="mt-4 text-xl font-bold text-center">
-            {guess === targetWord ? "You Win!" : `Game Over! The word was "${targetWord.toUpperCase()}"`}
+          <div className="mt-4 text-xl font-bold">
+            {attempts.includes(targetWord) ? "You Win!" : `Game Over! The word was "${targetWord.toUpperCase()}"`}
           </div>
         )}
+
+        <div className="mt-4">
+          {/* Skip link always visible */}
+          <a href="/four-pics-one-word" className="block p-2 mt-2 text-white bg-red-500 rounded-md">Skip</a>
+        </div>
+
+        {isGameOver && (
+          <div className="mt-4">
+            <a href="/four-pics-one-word" className="block p-2 mt-2 text-white bg-green-500 rounded-md">Next</a>
+          </div>
+        )}
+
       </div>
     </div>
   );
 };
+
 export default WordleGame;

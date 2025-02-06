@@ -50,12 +50,12 @@ const QuizGame = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen w-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500">
-      <div className="p-6 max-w-lg w-full bg-white rounded-lg shadow-xl text-center border border-gray-300">
+    <div className="flex items-center justify-center w-screen h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500">
+      <div className="w-full max-w-lg p-6 text-center bg-white border border-gray-300 rounded-lg shadow-xl">
         {showScore ? (
           <div>
             <h2 className="text-3xl font-bold text-green-600">Your score: {score} / {shuffledQuestions.length}</h2>
-            <button className="mt-6 px-5 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition" onClick={restartQuiz}>
+            <button className="px-5 py-3 mt-6 font-semibold text-white transition bg-blue-600 rounded-lg hover:bg-blue-700" onClick={restartQuiz}>
               Restart Quiz
             </button>
           </div>
@@ -67,7 +67,7 @@ const QuizGame = () => {
               {shuffledQuestions[currentQuestion].options.map((option, index) => (
                 <button
                   key={index}
-                  className="block w-full px-5 py-3 bg-gray-200 rounded-lg text-lg font-medium hover:bg-blue-500 hover:text-white transition"
+                  className="block w-full px-5 py-3 text-lg font-medium transition bg-gray-200 rounded-lg hover:bg-blue-500 hover:text-white"
                   onClick={() => handleAnswer(option)}
                 >
                   {option}
