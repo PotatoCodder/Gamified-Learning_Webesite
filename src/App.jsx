@@ -18,11 +18,12 @@ const AppContent = () => {
   localStorage.setItem('fourPicOneWordScore', 0);
   localStorage.setItem('wordleScore', 0);
   localStorage.setItem('guessGameScore', 0);
-
+  localStorage.setItem('memoryGameScore', 0);
   return (
     <div>
       <Navbar />
       {location.pathname === '/' && <Hero />}
+      <SpeechRecognition />
       <Routes>
         <Route path="/" element={<ImageBoxes />} />
         <Route path="/wordle" element={<Wordle />} />
@@ -33,6 +34,7 @@ const AppContent = () => {
         <Route path='/guess-picture' element={<GuessThePicture />} />
         <Route path='/four-pics-one-word' element={<FourpicsOneword />} />
       </Routes>
+
       <Footer />
     </div>
   );
