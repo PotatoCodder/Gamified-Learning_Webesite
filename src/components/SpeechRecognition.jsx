@@ -22,32 +22,30 @@ const SpeechRecognitionTest = () => {
       const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
       const recognitionInstance = new SpeechRecognitionAPI();
       recognitionInstance.lang = "en-US";
-      recognitionInstance.continuous = true; // ✅ Keep listening
-      recognitionInstance.interimResults = true; // ✅ Get live spoken words
-      
+      recognitionInstance.continuous = true; // Keep listening
+      recognitionInstance.interimResults = true; // Get live spoken words
+
       recognitionInstance.onresult = (event) => {
         let spoken = "";
         for (let i = 0; i < event.results.length; i++) {
           spoken += event.results[i][0].transcript + " ";
         }
         setTranscript(spoken.trim());
+
+        // Dynamically set spoken words as a lowercase array for comparison
         setSpokenWords(spoken.toLowerCase().split(" "));
       };
-      
+
       recognitionInstance.onerror = () => {
         setFeedback("Error with speech recognition.");
         setIsListening(false);
       };
-      
+
       setRecognition(recognitionInstance);
     } else {
       setFeedback("Speech Recognition is not supported in this browser.");
     }
   }, []);
-
-  useEffect(() => {
-    setSpokenWords([...spokenWords]); // ✅ Force re-render
-  }, [transcript]);
 
   const startListening = () => {
     setFeedback("Listening...");
@@ -66,23 +64,24 @@ const SpeechRecognitionTest = () => {
     const userWords = userText.toLowerCase().split(" ");
     const originalWords = currentPassage.toLowerCase().split(" ");
     let errors = [];
-    
+
     for (let i = 0; i < originalWords.length; i++) {
       if (userWords[i] !== originalWords[i]) {
         errors.push(`Error at word ${i + 1}: Expected "${originalWords[i]}", but got "${userWords[i] || "[missing]"}"`);
       }
     }
-    
+
     setFeedback(errors.length === 0 ? "Perfect!" : errors.join("\n"));
   };
 
   const getHighlightedText = () => {
+    // Split the current passage into individual words and check if they match spoken words
     return currentPassage.split(" ").map((word, index) => (
       <motion.span
         key={index}
         className={spokenWords.includes(word.toLowerCase()) ? "bg-yellow-300 px-1" : ""}
       >
-        {word} {" "}
+        {word}{" "}
       </motion.span>
     ));
   };
