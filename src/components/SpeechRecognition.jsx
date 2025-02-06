@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FaMicrophone, FaStop } from "react-icons/fa";
 import { motion } from "framer-motion";
 import _ from "lodash";
+import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
 
 const passages = [
   `The solar system is vast, filled with planets, asteroids, and mysteries beyond our reach.`,
@@ -11,52 +12,26 @@ const passages = [
 
 const SpeechRecognitionTest = () => {
   const [currentPassage, setCurrentPassage] = useState(_.sample(passages));
-  const [isListening, setIsListening] = useState(false);
   const [feedback, setFeedback] = useState("");
-  const [transcript, setTranscript] = useState("");
+  const [recognitionStarted, setRecognitionStarted] = useState(false);
+  const { transcript, resetTranscript, listening } = useSpeechRecognition();
+
   const [spokenWords, setSpokenWords] = useState([]);
-  const [recognition, setRecognition] = useState(null);
 
   useEffect(() => {
-    if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
-      const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
-      const recognitionInstance = new SpeechRecognitionAPI();
-      recognitionInstance.lang = "en-US";
-      recognitionInstance.continuous = true; // Keep listening
-      recognitionInstance.interimResults = true; // Get live spoken words
-
-      recognitionInstance.onresult = (event) => {
-        let spoken = "";
-        for (let i = 0; i < event.results.length; i++) {
-          spoken += event.results[i][0].transcript + " ";
-        }
-        setTranscript(spoken.trim());
-
-        // Dynamically set spoken words as a lowercase array for comparison
-        setSpokenWords(spoken.toLowerCase().split(" "));
-      };
-
-      recognitionInstance.onerror = () => {
-        setFeedback("Error with speech recognition.");
-        setIsListening(false);
-      };
-
-      setRecognition(recognitionInstance);
-    } else {
-      setFeedback("Speech Recognition is not supported in this browser.");
-    }
-  }, []);
+    // This will split the spoken words into an array and keep them updated
+    setSpokenWords(transcript.toLowerCase().split(" "));
+  }, [transcript]);
 
   const startListening = () => {
-    setFeedback("Listening...");
-    setIsListening(true);
-    setSpokenWords([]); // Reset spoken words
-    recognition.start();
+    resetTranscript(); // Reset previous transcript
+    setRecognitionStarted(true);
+    SpeechRecognition.startListening({ continuous: true, language: "en-US" });
   };
 
   const stopListening = () => {
-    recognition.stop();
-    setIsListening(false);
+    setRecognitionStarted(false);
+    SpeechRecognition.stopListening();
     compareText(transcript);
   };
 
@@ -102,14 +77,14 @@ const SpeechRecognitionTest = () => {
           <button
             onClick={startListening}
             className="px-6 py-3 text-white bg-blue-500 rounded-lg hover:bg-blue-700 disabled:opacity-50"
-            disabled={isListening}
+            disabled={recognitionStarted || listening}
           >
             <FaMicrophone className="inline-block mr-2" /> Start Reading
           </button>
           <button
             onClick={stopListening}
             className="px-6 py-3 text-white bg-red-500 rounded-lg hover:bg-red-700 disabled:opacity-50"
-            disabled={!isListening}
+            disabled={!recognitionStarted || !listening}
           >
             <FaStop className="inline-block mr-2" /> Stop Reading
           </button>
