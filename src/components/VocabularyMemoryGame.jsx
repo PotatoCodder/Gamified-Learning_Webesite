@@ -19,6 +19,8 @@ const shuffleArray = (arr) => {
   return arr.sort(() => Math.random() - 0.5);
 };
 
+console.log(words);
+
 const VocabularyMemoryGame = () => {
   const [cards, setCards] = useState([]);
   const [flippedCards, setFlippedCards] = useState([]);
