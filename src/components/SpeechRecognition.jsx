@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { FaMicrophone, FaStop } from "react-icons/fa";
 import { motion } from "framer-motion";
 import _ from "lodash";
+import "regenerator-runtime/runtime";
+
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
 
 const passages = [

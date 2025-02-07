@@ -1,3 +1,4 @@
+import "@babel/polyfill";
 import Navbar from './components/Navbar';
 import React from 'react';
 import Wordle from './components/Wordle';
