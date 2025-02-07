@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from 'react-router-dom';
 
 const questions = [
   { question: "What is the synonym of 'happy'?", options: ["Sad", "Joyful", "Angry", "Tired"], answer: "Joyful" },
@@ -57,7 +58,13 @@ const QuizGame = () => {
             <h2 className="text-3xl font-bold text-green-600">Your score: {score} / {shuffledQuestions.length}</h2>
             <button className="px-5 py-3 mt-6 font-semibold text-white transition bg-blue-600 rounded-lg hover:bg-blue-700" onClick={restartQuiz}>
               Restart Quiz
-            </button>
+            </button> <br />
+            <Link
+              to="/speech-recognition">
+              <button className="px-5 py-3 mt-6 font-semibold text-white transition bg-blue-600 rounded-lg hover:bg-blue-700">
+                Go to Speech Recognition
+              </button>
+            </Link>
           </div>
         ) : (
           <div>

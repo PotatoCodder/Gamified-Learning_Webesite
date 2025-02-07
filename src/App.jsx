@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import "@babel/polyfill";
 import Navbar from './components/Navbar';
 import React from 'react';
@@ -24,7 +25,6 @@ const AppContent = () => {
     <div>
       <Navbar />
       {location.pathname === '/' && <Hero />}
-      <SpeechRecognition />
       <Routes>
         <Route path="/" element={<ImageBoxes />} />
         <Route path="/wordle" element={<Wordle />} />

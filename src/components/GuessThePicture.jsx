@@ -88,13 +88,13 @@ const GuessThePicture = () => {
       </div>
       {result && <p className="mt-4 text-lg font-semibold">{result}</p>}
       {currentGame === games.length - 1 && result.includes("Game Over") && (
-        <Link to="/four-pics-one-word" className="px-4 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">Go to Wordle</Link>
+        <Link to="/memory" className="px-4 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">Go to Wordle</Link>
       )}
       <button 
-        onClick={() => navigate("/four-pics-one-word")} 
+        onClick={() => navigate("/memory")} 
         className="px-4 py-2 mt-2 text-white bg-red-500 rounded-lg hover:bg-red-600"
       >
-        Link
+        skip
       </button>
     </div>
   );
