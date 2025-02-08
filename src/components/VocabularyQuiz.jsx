@@ -60,7 +60,7 @@ const QuizGame = () => {
               Restart Quiz
             </button> <br />
             <Link
-              to="/speech-recognition">
+              to="/speechrecognition">
               <button className="px-5 py-3 mt-6 font-semibold text-white transition bg-blue-600 rounded-lg hover:bg-blue-700">
                 Go to Speech Recognition
               </button>

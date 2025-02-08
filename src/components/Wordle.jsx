@@ -97,12 +97,12 @@ const WordleGame = () => {
 
         <div className="mt-4">
           {/* Skip link always visible */}
-          <a href="/vocab-quiz" className="block p-2 mt-2 text-white bg-red-500 rounded-md">Skip</a>
+          <a href="/vocabquiz" className="block p-2 mt-2 text-white bg-red-500 rounded-md">Skip</a>
         </div>
 
         {isGameOver && (
           <div className="mt-4">
-            <a href="/vocab-quiz" className="block p-2 mt-2 text-white bg-green-500 rounded-md">Next</a>
+            <a href="/vocabquiz" className="block p-2 mt-2 text-white bg-green-500 rounded-md">Next</a>
           </div>
         )}
 

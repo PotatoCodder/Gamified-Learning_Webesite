@@ -14,7 +14,7 @@ export default function ImagesBox() {
             title="Word Play"
             description="Enhance your vocabulary with fun word association games!"
             icon={<FaPlay className="text-4xl text-purple-500" />}
-            link="/guess-picture"
+            link="/guesspicture"
           />
         </div>
       </div>

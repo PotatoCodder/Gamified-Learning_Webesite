@@ -29,11 +29,11 @@ const AppContent = () => {
         <Route path="/" element={<ImageBoxes />} />
         <Route path="/wordle" element={<Wordle />} />
         <Route path="/memory" element={<VocabularyMemoryGame />} />
-        <Route path="/vocab-quiz" element={<VocabularyQuiz />} />
-        <Route path="/next-passage" element={<NextPassage />} />
-        <Route path='/speech-recognition' element={<SpeechRecognition />} />
-        <Route path='/guess-picture' element={<GuessThePicture />} />
-        <Route path='/four-pics' element={<FourpicsOneword />} />
+        <Route path="/vocabquiz" element={<VocabularyQuiz />} />
+        <Route path="/passage" element={<NextPassage />} />
+        <Route path='/speechrecognition' element={<SpeechRecognition />} />
+        <Route path='/guesspicture' element={<GuessThePicture />} />
+        <Route path='/fourpics' element={<FourpicsOneword />} />
       </Routes>
 
       <Footer />
