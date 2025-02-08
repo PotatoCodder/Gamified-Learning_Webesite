@@ -4,6 +4,7 @@ import { FaMicrophone, FaStop } from "react-icons/fa";
 import { motion } from "framer-motion";
 import "regenerator-runtime/runtime";
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
+import { Link } from "react-router-dom";
 
 const passage = `There are rocks in our Solar System that never flocked together to form planets. Larger ones called asteroids gather in the Asteroid Belt, a strip found between Mars and Jupiter. Some asteroids don’t move along this belt but have paths that bring them close to the earth. These are called Apollo Asteroids.
 
@@ -148,6 +149,13 @@ const SpeechRecognitionTest = () => {
             </ul>
           </div>
         </div>
+        <Link to="/">
+          <button
+            className="px-6 py-3 mt-6 text-white bg-gray-500 rounded-lg hover:bg-gray-700"
+          >
+            Go Back
+          </button>
+        </Link>
       </div>
     </div>
   );
