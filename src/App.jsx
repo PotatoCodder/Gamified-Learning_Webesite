@@ -13,6 +13,7 @@ import SpeechRecognition from './components/SpeechRecognition';
 import FourpicsOneword from './components/FourpicsOneword';
 import Footer from './components/Footer';
 import GuessThePicture from './components/GuessThePicture';
+import ScoreBoard from './components/ScoreBoard'
 
 const AppContent = () => {
   const location = useLocation();
@@ -21,10 +22,13 @@ const AppContent = () => {
   localStorage.setItem('wordleScore', 0);
   localStorage.setItem('guessGameScore', 0);
   localStorage.setItem('memoryGameScore', 0);
+  localStorage.setItem('vocabQuizScore', 0);
+  localStorage.setItem('speechRecognitionScore', 0);
   return (
     <div>
       <Navbar />
       {location.pathname === '/' && <Hero />}
+      {location.pathname === '/' && <ScoreBoard />}
       <Routes>
         <Route path="/" element={<ImageBoxes />} />
         <Route path="/wordle" element={<Wordle />} />
