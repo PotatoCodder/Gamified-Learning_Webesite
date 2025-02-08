@@ -11,6 +11,8 @@ There may be half a million asteroids whose diameters are bigger than one kilome
 
 Unlike asteroids, meteoroids are small rocky bodies, that are scattered in space and do not orbit the sun. They cross the Earth’s orbit and are often seen burning up in the Earth’s atmosphere at night. The faint flashes of light they make are called shooting stars.`;
 
+
+
 const SpeechRecognitionTest = () => {
   const [feedback, setFeedback] = useState("");
   const [score, setScore] = useState(1000);
@@ -18,6 +20,8 @@ const SpeechRecognitionTest = () => {
   const [recognitionStarted, setRecognitionStarted] = useState(false);
   const { transcript, resetTranscript, listening } = useSpeechRecognition();
   const [spokenWords, setSpokenWords] = useState([]);
+  localStorage.setItem("speechRecognitionScore", score);
+  localStorage.setItem("speechRecognitionMistakes", mistakes);
 
   useEffect(() => {
     setSpokenWords(transcript.toLowerCase().split(" "));
