@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import { Box, Card, CardContent, Typography, Grid, List, ListItem, ListItemIcon, ListItemText, Button } from '@mui/material';
 import { FaTrophy, FaBrain, FaImage, FaFont, FaBook, FaMicrophone } from 'react-icons/fa';
