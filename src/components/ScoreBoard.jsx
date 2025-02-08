@@ -5,41 +5,57 @@ import { FaTrophy, FaBrain, FaImage, FaFont, FaBook, FaMicrophone } from "react-
 import { GiPuzzle } from "react-icons/gi";
 
 export default function ScoreBoard() {
-  const getScore = (key) => parseInt(localStorage.getItem(key)) || 0;
+  const [scores, setScores] = useState({
+    fourPicsOneWord: 0,
+    memoryGame: 0,
+    guessThePicture: 0,
+    wordle: 0,
+    vocabquiz: 0,
+    speechRecognitionScore: 0,
+  });
 
-  const [fourPicsOneWord, setFourPicsOneWord] = useState(getScore("fourPicOneWordScore"));
-  const [memoryGame, setMemoryGame] = useState(getScore("memoryGameScore"));
-  const [guessThePicture, setGuessThePicture] = useState(getScore("guessGameScore"));
-  const [wordle, setWordle] = useState(getScore("wordleScore"));
-  const [vocabquiz, setVocabQuiz] = useState(getScore("vocabQuizScore"));
-  const [speechRecognitionScore, setSpeechRecognitionScore] = useState(getScore("speechRecognitionScore"));
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setScores({
+        fourPicsOneWord: parseInt(localStorage.getItem("fourPicOneWordScore")) || 0,
+        memoryGame: parseInt(localStorage.getItem("memoryGameScore")) || 0,
+        guessThePicture: parseInt(localStorage.getItem("guessGameScore")) || 0,
+        wordle: parseInt(localStorage.getItem("wordleScore")) || 0,
+        vocabquiz: parseInt(localStorage.getItem("vocabQuizScore")) || 0,
+        speechRecognitionScore: parseInt(localStorage.getItem("speechRecognitionScore")) || 0,
+      });
+    }
+  }, []);
 
-  const totalScore =
-    fourPicsOneWord + memoryGame + guessThePicture + wordle + vocabquiz + speechRecognitionScore;
+  const totalScore = Object.values(scores).reduce((acc, score) => acc + score, 0);
 
   const gameScores = [
-    { name: "Four Pics One Word", score: fourPicsOneWord, icon: <GiPuzzle /> },
-    { name: "Memory Game", score: memoryGame, icon: <FaBrain /> },
-    { name: "Guess The Picture", score: guessThePicture, icon: <FaImage /> },
-    { name: "Wordle", score: wordle, icon: <FaFont /> },
-    { name: "Vocabulary Quiz", score: vocabquiz, icon: <FaBook /> },
-    { name: "Speech Recognition", score: speechRecognitionScore, icon: <FaMicrophone /> },
+    { name: "Four Pics One Word", score: scores.fourPicsOneWord, icon: <GiPuzzle /> },
+    { name: "Memory Game", score: scores.memoryGame, icon: <FaBrain /> },
+    { name: "Guess The Picture", score: scores.guessThePicture, icon: <FaImage /> },
+    { name: "Wordle", score: scores.wordle, icon: <FaFont /> },
+    { name: "Vocabulary Quiz", score: scores.vocabquiz, icon: <FaBook /> },
+    { name: "Speech Recognition", score: scores.speechRecognitionScore, icon: <FaMicrophone /> },
   ];
 
   const resetScores = () => {
-    localStorage.setItem("fourPicOneWordScore", 0);
-    localStorage.setItem("memoryGameScore", 0);
-    localStorage.setItem("guessGameScore", 0);
-    localStorage.setItem("wordleScore", 0);
-    localStorage.setItem("vocabQuizScore", 0);
-    localStorage.setItem("speechRecognitionScore", 0);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("fourPicOneWordScore", 0);
+      localStorage.setItem("memoryGameScore", 0);
+      localStorage.setItem("guessGameScore", 0);
+      localStorage.setItem("wordleScore", 0);
+      localStorage.setItem("vocabQuizScore", 0);
+      localStorage.setItem("speechRecognitionScore", 0);
 
-    setFourPicsOneWord(0);
-    setMemoryGame(0);
-    setGuessThePicture(0);
-    setWordle(0);
-    setVocabQuiz(0);
-    setSpeechRecognitionScore(0);
+      setScores({
+        fourPicsOneWord: 0,
+        memoryGame: 0,
+        guessThePicture: 0,
+        wordle: 0,
+        vocabquiz: 0,
+        speechRecognitionScore: 0,
+      });
+    }
   };
 
   return (
