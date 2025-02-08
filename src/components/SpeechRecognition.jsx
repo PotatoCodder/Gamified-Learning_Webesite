@@ -13,7 +13,7 @@ Unlike asteroids, meteoroids are small rocky bodies, that are scattered in space
 
 const SpeechRecognitionTest = () => {
   const [feedback, setFeedback] = useState("");
-  const [score, setScore] = useState(100);
+  const [score, setScore] = useState(1000);
   const [mistakes, setMistakes] = useState({});
   const [recognitionStarted, setRecognitionStarted] = useState(false);
   const { transcript, resetTranscript, listening } = useSpeechRecognition();
@@ -26,7 +26,7 @@ const SpeechRecognitionTest = () => {
   const startListening = () => {
     resetTranscript();
     setRecognitionStarted(true);
-    setScore(100);
+    setScore(1000);
     SpeechRecognition.startListening({ continuous: true, language: "en-US" });
   };
 
@@ -56,17 +56,14 @@ const SpeechRecognitionTest = () => {
         i++;
         j++;
       } else if (userWords[j] && !originalWords.includes(userWords[j])) {
-        // Insertion (Extra word spoken)
         errors.push(`Insertion: "${userWords[j]}" at position ${j + 1}`);
         mistakeCounts.insertion++;
         j++;
       } else if (!userWords[j]) {
-        // Omission (Word missing)
         errors.push(`Omission: Missing "${originalWords[i]}" at position ${i + 1}`);
         mistakeCounts.omission++;
         i++;
       } else if (originalWords[i] !== userWords[j]) {
-        // Substitution (Wrong word used)
         errors.push(`Substitution: Expected "${originalWords[i]}", but got "${userWords[j]}"`);
         mistakeCounts.substitution++;
         i++;
@@ -74,9 +71,17 @@ const SpeechRecognitionTest = () => {
       }
     }
 
-    // Deduct score based on mistakes
-    let totalErrors = Object.values(mistakeCounts).reduce((a, b) => a + b, 0);
-    let calculatedScore = Math.max(100 - totalErrors * 5, 0);
+    // Score calculation based on mistake details
+    let calculatedScore = 1000;
+    calculatedScore -= mistakeCounts.omission * 10;
+    calculatedScore -= mistakeCounts.substitution * 7;
+    calculatedScore -= mistakeCounts.insertion * 5;
+    calculatedScore -= mistakeCounts.mispronunciation * 5;
+    calculatedScore -= mistakeCounts.repetition * 3;
+    calculatedScore -= mistakeCounts.transposition * 3;
+    calculatedScore -= mistakeCounts.reversal * 3;
+
+    calculatedScore = Math.max(calculatedScore, 100); // Minimum score of 100
     setScore(calculatedScore);
     setMistakes(mistakeCounts);
 
@@ -124,14 +129,7 @@ const SpeechRecognitionTest = () => {
         </div>
 
         <div className="mt-6 text-center">
-          <p className="text-xl font-bold">Score: {score}/100</p>
-
-          {feedback && (
-            <div className="p-4 mt-4 text-gray-800 bg-gray-100 border border-gray-300 rounded-md">
-              <h3 className="mb-2 text-lg font-semibold">Feedback:</h3>
-              <pre className="text-left whitespace-pre-wrap">{feedback}</pre>
-            </div>
-          )}
+          <p className="text-xl font-bold">Score: {score}/1000</p>
 
           <div className="p-4 mt-6 text-gray-800 bg-gray-100 border border-gray-300 rounded-md">
             <h3 className="mb-2 text-lg font-semibold">Mistake Details:</h3>
