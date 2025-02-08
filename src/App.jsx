@@ -33,7 +33,7 @@ const AppContent = () => {
         <Route path="/next-passage" element={<NextPassage />} />
         <Route path='/speech-recognition' element={<SpeechRecognition />} />
         <Route path='/guess-picture' element={<GuessThePicture />} />
-        <Route path='/four-pics-one-word' element={<FourpicsOneword />} />
+        <Route path='/four-pics' element={<FourpicsOneword />} />
       </Routes>
 
       <Footer />
