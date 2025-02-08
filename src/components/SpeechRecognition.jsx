@@ -14,6 +14,7 @@ Unlike asteroids, meteoroids are small rocky bodies, that are scattered in space
 const SpeechRecognitionTest = () => {
   const [feedback, setFeedback] = useState("");
   const [score, setScore] = useState(100);
+  const [mistakes, setMistakes] = useState({});
   const [recognitionStarted, setRecognitionStarted] = useState(false);
   const { transcript, resetTranscript, listening } = useSpeechRecognition();
   const [spokenWords, setSpokenWords] = useState([]);
@@ -77,6 +78,7 @@ const SpeechRecognitionTest = () => {
     let totalErrors = Object.values(mistakeCounts).reduce((a, b) => a + b, 0);
     let calculatedScore = Math.max(100 - totalErrors * 5, 0);
     setScore(calculatedScore);
+    setMistakes(mistakeCounts);
 
     setFeedback(errors.length === 0 ? "Perfect!" : errors.join("\n"));
   };
@@ -121,9 +123,28 @@ const SpeechRecognitionTest = () => {
           </button>
         </div>
 
-        <div className="mt-4 text-lg text-center">
-          <p><strong>Score:</strong> {score}/100</p>
-          <p>{feedback}</p>
+        <div className="mt-6 text-center">
+          <p className="text-xl font-bold">Score: {score}/100</p>
+
+          {feedback && (
+            <div className="p-4 mt-4 text-gray-800 bg-gray-100 border border-gray-300 rounded-md">
+              <h3 className="mb-2 text-lg font-semibold">Feedback:</h3>
+              <pre className="text-left whitespace-pre-wrap">{feedback}</pre>
+            </div>
+          )}
+
+          <div className="p-4 mt-6 text-gray-800 bg-gray-100 border border-gray-300 rounded-md">
+            <h3 className="mb-2 text-lg font-semibold">Mistake Details:</h3>
+            <ul className="text-left">
+              <li><strong>Omissions:</strong> {mistakes.omission}</li>
+              <li><strong>Substitutions:</strong> {mistakes.substitution}</li>
+              <li><strong>Insertions:</strong> {mistakes.insertion}</li>
+              <li><strong>Mispronunciations:</strong> {mistakes.mispronunciation}</li>
+              <li><strong>Repetitions:</strong> {mistakes.repetition}</li>
+              <li><strong>Transpositions:</strong> {mistakes.transposition}</li>
+              <li><strong>Reversals:</strong> {mistakes.reversal}</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
