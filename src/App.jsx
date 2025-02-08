@@ -18,12 +18,9 @@ import ScoreBoard from './components/ScoreBoard'
 const AppContent = () => {
   const location = useLocation();
 
-  localStorage.setItem('fourPicOneWordScore', 0);
-  localStorage.setItem('wordleScore', 0);
-  localStorage.setItem('guessGameScore', 0);
-  localStorage.setItem('memoryGameScore', 0);
-  localStorage.setItem('vocabQuizScore', 0);
-  localStorage.setItem('speechRecognitionScore', 0);
+  console.log(localStorage);
+
+
   return (
     <div>
       <Navbar />
