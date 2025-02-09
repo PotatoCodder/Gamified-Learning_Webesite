@@ -14,6 +14,7 @@ import FourpicsOneword from './components/FourpicsOneword';
 import Footer from './components/Footer';
 import GuessThePicture from './components/GuessThePicture';
 import ScoreBoard from './components/ScoreBoard'
+import QuizForm from './components/QuizForm';
 
 const AppContent = () => {
   const location = useLocation();
@@ -35,6 +36,7 @@ const AppContent = () => {
         <Route path='/speechrecognition' element={<SpeechRecognition />} />
         <Route path='/guesspicture' element={<GuessThePicture />} />
         <Route path='/fourpics' element={<FourpicsOneword />} />
+        <Route path='/quiz-form' element={<QuizForm />} />
       </Routes>
 
       <Footer />
