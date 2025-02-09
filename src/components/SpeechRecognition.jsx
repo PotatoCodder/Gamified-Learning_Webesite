@@ -149,11 +149,11 @@ const SpeechRecognitionTest = () => {
             </ul>
           </div>
         </div>
-        <Link to="/">
+        <Link to="/quiz-form">
           <button
             className="px-6 py-3 mt-6 text-white bg-gray-500 rounded-lg hover:bg-gray-700"
           >
-            Go Back
+            Next
           </button>
         </Link>
       </div>

@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { Link } from 'react-router-dom';
+/* eslint-disable no-unused-vars */
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const questions = [
   { question: "What is the synonym of 'happy'?", options: ["Sad", "Joyful", "Angry", "Tired"], answer: "Joyful" },
@@ -17,7 +18,7 @@ const questions = [
   { question: "What does 'eloquent' mean?", options: ["Fluent and persuasive in speaking", "Dull and boring", "Hard to understand", "Angry"], answer: "Fluent and persuasive in speaking" },
   { question: "What is an antonym of 'generous'?", options: ["Stingy", "Kind", "Charitable", "Giving"], answer: "Stingy" },
   { question: "Which word is a synonym of 'brave'?", options: ["Courageous", "Cowardly", "Fearful", "Weak"], answer: "Courageous" },
-  { question: "What is the opposite of 'ascend'?", options: ["Descend", "Rise", "Lift", "Jump"], answer: "Descend" }
+  { question: "What is the opposite of 'ascend'?", options: ["Descend", "Rise", "Lift", "Jump"], answer: "Descend" },
 ];
 
 const shuffleArray = (array) => {
@@ -30,9 +31,16 @@ const QuizGame = () => {
   const [score, setScore] = useState(0);
   const [showScore, setShowScore] = useState(false);
 
+  useEffect(() => {
+    const savedScore = localStorage.getItem("vocabQuizScore");
+    if (savedScore) {
+      console.log("Previous Score:", savedScore);
+    }
+  }, []);
+
   const handleAnswer = (option) => {
     if (option === shuffledQuestions[currentQuestion].answer) {
-      setScore(score + 1);
+      setScore((prevScore) => prevScore + 1);
     }
 
     const nextQuestion = currentQuestion + 1;
@@ -40,6 +48,7 @@ const QuizGame = () => {
       setCurrentQuestion(nextQuestion);
     } else {
       setShowScore(true);
+      localStorage.setItem("vocabQuizScore", score + 1); // Save final score
     }
   };
 
@@ -48,6 +57,7 @@ const QuizGame = () => {
     setCurrentQuestion(0);
     setScore(0);
     setShowScore(false);
+    localStorage.removeItem("vocabQuizScore"); // Reset stored score
   };
 
   return (
@@ -55,12 +65,17 @@ const QuizGame = () => {
       <div className="w-full max-w-lg p-6 text-center bg-white border border-gray-300 rounded-lg shadow-xl">
         {showScore ? (
           <div>
-            <h2 className="text-3xl font-bold text-green-600">Your score: {score} / {shuffledQuestions.length}</h2>
-            <button className="px-5 py-3 mt-6 font-semibold text-white transition bg-blue-600 rounded-lg hover:bg-blue-700" onClick={restartQuiz}>
+            <h2 className="text-3xl font-bold text-green-600">
+              Your score: {score} / {shuffledQuestions.length}
+            </h2>
+            <button
+              className="px-5 py-3 mt-6 font-semibold text-white transition bg-blue-600 rounded-lg hover:bg-blue-700"
+              onClick={restartQuiz}
+            >
               Restart Quiz
-            </button> <br />
-            <Link
-              to="/speechrecognition">
+            </button>
+            <br />
+            <Link to="/speechrecognition">
               <button className="px-5 py-3 mt-6 font-semibold text-white transition bg-blue-600 rounded-lg hover:bg-blue-700">
                 Go to Speech Recognition
               </button>
@@ -68,8 +83,12 @@ const QuizGame = () => {
           </div>
         ) : (
           <div>
-            <h2 className="text-2xl font-bold text-gray-800">Question {currentQuestion + 1} of {shuffledQuestions.length}</h2>
-            <p className="mt-4 text-lg font-medium text-gray-700">{shuffledQuestions[currentQuestion].question}</p>
+            <h2 className="text-2xl font-bold text-gray-800">
+              Question {currentQuestion + 1} of {shuffledQuestions.length}
+            </h2>
+            <p className="mt-4 text-lg font-medium text-gray-700">
+              {shuffledQuestions[currentQuestion].question}
+            </p>
             <div className="mt-6 space-y-3">
               {shuffledQuestions[currentQuestion].options.map((option, index) => (
                 <button
@@ -88,4 +107,4 @@ const QuizGame = () => {
   );
 };
 
-export default QuizGame;
+export default QuizGame; 

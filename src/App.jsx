@@ -10,7 +10,6 @@ import VocabularyMemoryGame from './components/VocabularyMemoryGame';
 import VocabularyQuiz from './components/VocabularyQuiz';
 import NextPassage from './components/NextPassage';
 import SpeechRecognition from './components/SpeechRecognition';
-import FourpicsOneword from './components/FourpicsOneword';
 import Footer from './components/Footer';
 import GuessThePicture from './components/GuessThePicture';
 import ScoreBoard from './components/ScoreBoard'
@@ -35,7 +34,6 @@ const AppContent = () => {
         <Route path="/passage" element={<NextPassage />} />
         <Route path='/speechrecognition' element={<SpeechRecognition />} />
         <Route path='/guesspicture' element={<GuessThePicture />} />
-        <Route path='/fourpics' element={<FourpicsOneword />} />
         <Route path='/quiz-form' element={<QuizForm />} />
       </Routes>
 

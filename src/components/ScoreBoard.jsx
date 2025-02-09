@@ -6,7 +6,6 @@ import { GiPuzzle } from "react-icons/gi";
 
 export default function ScoreBoard() {
   const [scores, setScores] = useState({
-    fourPicsOneWord: 0,
     memoryGame: 0,
     guessThePicture: 0,
     wordle: 0,
@@ -18,7 +17,6 @@ export default function ScoreBoard() {
   useEffect(() => {
     if (typeof window !== "undefined") {
       setScores({
-        fourPicsOneWord: parseInt(localStorage.getItem("fourPicOneWordScore")) || 0,
         memoryGame: parseInt(localStorage.getItem("memoryGameScore")) || 0,
         guessThePicture: parseInt(localStorage.getItem("guessGameScore")) || 0,
         wordle: parseInt(localStorage.getItem("wordleScore")) || 0,
@@ -32,7 +30,6 @@ export default function ScoreBoard() {
   const totalScore = Object.values(scores).reduce((acc, score) => acc + score, 0);
 
   const gameScores = [
-    { name: "Four Pics One Word", score: scores.fourPicsOneWord, icon: <GiPuzzle /> },
     { name: "Memory Game", score: scores.memoryGame, icon: <FaBrain /> },
     { name: "Guess The Picture", score: scores.guessThePicture, icon: <FaImage /> },
     { name: "Wordle", score: scores.wordle, icon: <FaFont /> },
@@ -43,7 +40,6 @@ export default function ScoreBoard() {
 
   const resetScores = () => {
     if (typeof window !== "undefined") {
-      localStorage.setItem("fourPicOneWordScore", 0);
       localStorage.setItem("memoryGameScore", 0);
       localStorage.setItem("guessGameScore", 0);
       localStorage.setItem("wordleScore", 0);
@@ -52,7 +48,6 @@ export default function ScoreBoard() {
       localStorage.setItem("quiz", 0)
 
       setScores({
-        fourPicsOneWord: 0,
         memoryGame: 0,
         guessThePicture: 0,
         wordle: 0,
