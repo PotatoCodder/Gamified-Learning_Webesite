@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import equator from '../assets/equator.webp';
 import seaVent from '../assets/seaVent.jpg';
 import antik from '../assets/antik.jpg';
-
+import Voltage from '../assets/volatage.jpg'
 const GuessThePicture = () => {
     console.log("guess the picture score", localStorage.getItem("guessGameScore"));
   const games = [
@@ -24,6 +24,18 @@ const GuessThePicture = () => {
       correctAnswer: "Antikythera Mechanism",
       hint: "An ancient Greek device believed to be the first analog computer.",
       options: ["Sundial", "Antikythera Mechanism", "Astronomical Clock", "Compass"]
+    },
+    {
+      image: Voltage,
+      correctAnswer: "Volatage",
+      hint: "the pressure from an electrical circuit's power source that pushes charged electrons (current) through a conducting loop, enabling them to do work such as illuminating a light",
+      options: ["Voltage", "Hiphop", "Power", "Wire"]
+    },
+    {
+      image: Voltage,
+      correctAnswer: "Coding",
+      hint: "the process of assigning a code to something for classification or identification.",
+      options: ["Coding", "Programming", "Java", "textTyping"]
     }
   ];
 

@@ -36,7 +36,6 @@ const AppContent = () => {
         <Route path='/guesspicture' element={<GuessThePicture />} />
         <Route path='/quiz-form' element={<QuizForm />} />
       </Routes>
-
       <Footer />
     </div>
   );
