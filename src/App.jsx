@@ -13,7 +13,6 @@ import SpeechRecognition from './components/SpeechRecognition';
 import Footer from './components/Footer';
 import GuessThePicture from './components/GuessThePicture';
 import ScoreBoard from './components/ScoreBoard'
-import QuizForm from './components/QuizForm';
 
 const AppContent = () => {
   const location = useLocation();
@@ -34,7 +33,6 @@ const AppContent = () => {
         <Route path="/passage" element={<NextPassage />} />
         <Route path='/speechrecognition' element={<SpeechRecognition />} />
         <Route path='/guesspicture' element={<GuessThePicture />} />
-        <Route path='/quiz-form' element={<QuizForm />} />
       </Routes>
       <Footer />
     </div>
