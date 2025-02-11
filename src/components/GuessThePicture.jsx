@@ -3,7 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import equator from '../assets/equator.webp';
 import seaVent from '../assets/seaVent.jpg';
 import antik from '../assets/antik.jpg';
-import Voltage from '../assets/volatage.jpg'
+import Voltage from '../assets/volahe.jpg'
+import coding from '../assets/coding.jpg'
 const GuessThePicture = () => {
     console.log("guess the picture score", localStorage.getItem("guessGameScore"));
   const games = [
@@ -32,7 +33,7 @@ const GuessThePicture = () => {
       options: ["Voltage", "Hiphop", "Power", "Wire"]
     },
     {
-      image: Voltage,
+      image: coding,
       correctAnswer: "Coding",
       hint: "the process of assigning a code to something for classification or identification.",
       options: ["Coding", "Programming", "Java", "textTyping"]
