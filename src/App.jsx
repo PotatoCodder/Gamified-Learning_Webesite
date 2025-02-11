@@ -13,6 +13,7 @@ import SpeechRecognition from './components/SpeechRecognition';
 import Footer from './components/Footer';
 import GuessThePicture from './components/GuessThePicture';
 import ScoreBoard from './components/ScoreBoard'
+import FourPicsOneWord from "./components/FourPic";
 
 const AppContent = () => {
   const location = useLocation();
@@ -33,6 +34,7 @@ const AppContent = () => {
         <Route path="/passage" element={<NextPassage />} />
         <Route path='/speechrecognition' element={<SpeechRecognition />} />
         <Route path='/guesspicture' element={<GuessThePicture />} />
+        <Route path='/four-pics-one-word' element={<FourPicsOneWord />} />
       </Routes>
       <Footer />
     </div>
