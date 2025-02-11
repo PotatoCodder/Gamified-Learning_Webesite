@@ -12,7 +12,6 @@ export default function ScoreBoard() {
     wordle: 0,
     vocabquiz: 0,
     speechRecognitionScore: 0,
-    quiz: 0,
   });
 
   useEffect(() => {
@@ -23,7 +22,6 @@ export default function ScoreBoard() {
         wordle: parseInt(localStorage.getItem("wordleScore")) || 0,
         vocabquiz: parseInt(localStorage.getItem("vocabQuizScore")) || 0,
         speechRecognitionScore: parseInt(localStorage.getItem("speechRecognitionScore")) || 0,
-        quiz: parseInt(localStorage.getItem("quiz")) || 0,
       });
     }
   }, []);
@@ -35,9 +33,7 @@ export default function ScoreBoard() {
     { name: "Guess The Picture", score: scores.guessThePicture, icon: <FaImage /> },
     { name: "Wordle", score: scores.wordle, icon: <FaFont /> },
     { name: "Vocabulary Quiz", score: scores.vocabquiz, icon: <FaBook /> },
-    { name: "Speech Recognition", score: scores.speechRecognitionScore, icon: <FaMicrophone /> },
-    { name: "Quiz", score: scores.quiz, icon: <FaBook /> },
-  ];
+    { name: "Speech Recognition", score: scores.speechRecognitionScore, icon: <FaMicrophone /> },  ];
 
   const resetScores = () => {
     if (typeof window !== "undefined") {
@@ -46,7 +42,6 @@ export default function ScoreBoard() {
       localStorage.setItem("wordleScore", 0);
       localStorage.setItem("vocabQuizScore", 0);
       localStorage.setItem("speechRecognitionScore", 0);
-      localStorage.setItem("quiz", 0);
 
       setScores({
         memoryGame: 0,
@@ -54,7 +49,6 @@ export default function ScoreBoard() {
         wordle: 0,
         vocabquiz: 0,
         speechRecognitionScore: 0,
-        quiz: 0,
       });
     }
   };
